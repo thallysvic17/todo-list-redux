@@ -4,7 +4,7 @@ import BotaoAdd from '../../Components/BotaoAdicionar'
 
 const Home = () => (
   <>
-    <SideBar />
+    <SideBar mostrarFiltros={true} />
     <TodoList />
     <BotaoAdd />
   </>

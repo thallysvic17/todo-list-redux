@@ -4,7 +4,7 @@ import Form from '../../Components-Containers/Formulario'
 const Cadastro = () => (
   <>
     {/* side bar */}
-    <SideBar />
+    <SideBar mostrarFiltros={false} />
 
     <Form />
   </>

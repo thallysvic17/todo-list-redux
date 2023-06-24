@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import * as S from './styles'
 
-import * as enums from '../../../utils/enums/Tarefa'
-
-import { remover, editar } from '../../../store/reducers/tarefas'
+import { remover, editar, alteraStatus } from '../../../store/reducers/tarefas'
 import TarefaClass from '../../../models/Tarefa'
+import { BtnSave, Button } from '../../../styles/Global'
+import * as enums from '../../../utils/enums/Tarefa'
 
 type Props = TarefaClass
 
@@ -30,9 +30,25 @@ const Tarefa = ({
     setEstaEditando(false)
     setDescription(OriginalDescription)
   }
+
+  function alteraStatusTarefa(evento: ChangeEvent<HTMLInputElement>) {
+    dispatch(
+      alteraStatus({
+        id,
+        finalizado: evento.target.checked
+      })
+    )
+  }
   return (
     <S.Card>
-      <S.Tittle>{tittle}</S.Tittle>
+      <label htmlFor={tittle}>
+        <input type="checkbox" id={tittle} onChange={alteraStatusTarefa} />
+
+        <S.Tittle>
+          {EstaEditando && <em>Editando: </em>}
+          {tittle}
+        </S.Tittle>
+      </label>
       <S.Tag parametro="prioridade" prioridade={prioridade}>
         {prioridade}
       </S.Tag>
@@ -47,7 +63,7 @@ const Tarefa = ({
       <S.ActionBar>
         {EstaEditando ? (
           <>
-            <S.BtnSave
+            <BtnSave
               onClick={() => {
                 dispatch(
                   editar({
@@ -62,14 +78,14 @@ const Tarefa = ({
               }}
             >
               Salvar
-            </S.BtnSave>
+            </BtnSave>
             <S.BtnCancelAndRemove onClick={cancelarEdicao}>
               Cancelar
             </S.BtnCancelAndRemove>
           </>
         ) : (
           <>
-            <S.Button onClick={() => setEstaEditando(true)}>Editar</S.Button>
+            <Button onClick={() => setEstaEditando(true)}>Editar</Button>
             <S.BtnCancelAndRemove onClick={() => dispatch(remover(id))}>
               Remover
             </S.BtnCancelAndRemove>
