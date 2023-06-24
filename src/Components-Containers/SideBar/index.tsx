@@ -3,6 +3,8 @@ import FilterCard from '../../Components/FilterCard'
 import * as S from './styles'
 import { RootReducer } from '../../store'
 import { alteraTermo } from '../../store/reducers/filtro'
+import * as enuns from '../../utils/enums/Tarefa'
+import { Campo } from '../../styles/Global'
 
 const SideBar = () => {
   const dispatch = useDispatch()
@@ -11,19 +13,39 @@ const SideBar = () => {
   return (
     <S.Aside>
       <div>
-        <S.Campo
+        <Campo
           type="text"
           placeholder="Buscar"
           value={termo}
           onChange={(evento) => dispatch(alteraTermo(evento.target.value))}
         />
         <S.Filters>
-          <FilterCard legenda="pendentes" contador={1} />
-          <FilterCard legenda="concluidas" contador={2} />
-          <FilterCard legenda="urgentes" contador={3} />
-          <FilterCard legenda="importantes" contador={4} />
-          <FilterCard legenda="normal" contador={5} />
-          <FilterCard ativo legenda="todas" contador={10} />
+          <FilterCard
+            valor={enuns.Status.PENDENTE}
+            criterio="status"
+            legenda="pendentes"
+          />
+          <FilterCard
+            valor={enuns.Status.CONCLUIDA}
+            criterio="status"
+            legenda="concluidas"
+          />
+          <FilterCard
+            valor={enuns.Prioridade.URGENTE}
+            criterio="prioridade"
+            legenda="urgentes"
+          />
+          <FilterCard
+            valor={enuns.Prioridade.IMPORTANTE}
+            criterio="prioridade"
+            legenda="importantes"
+          />
+          <FilterCard
+            valor={enuns.Prioridade.NORMAL}
+            criterio="prioridade"
+            legenda="normal"
+          />
+          <FilterCard criterio="todas" legenda="todas" />
         </S.Filters>
       </div>
     </S.Aside>
